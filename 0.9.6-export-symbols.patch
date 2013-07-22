@@ -1,0 +1,17 @@
+--- origsrc/verilog-0.9.6/vvp/Makefile.in	2012-09-05 20:20:12.000000000 -0500
++++ src/verilog-0.9.6/vvp/Makefile.in	2013-07-21 23:57:29.083547500 -0500
+@@ -102,12 +102,8 @@ ifeq (@WIN32@,yes)
+ #
+ # To get this to work correctly we must use the suffixed version of the
+ # executable to build the library.
+-vvp@EXEEXT@ libvpi.a: $O $(srcdir)/vvp.def
+-	$(CXX) -o vvp$(suffix)@EXEEXT@ $(LDFLAGS) $O $(dllib) $(LIBS)
+-	$(DLLTOOL) --dllname vvp$(suffix)@EXEEXT@ --def $(srcdir)/vvp.def \
+-		--output-lib libvpi.a --output-exp vvp.exp
+-	rm -f vvp$(suffix)@EXEEXT@
+-	$(CXX) $(LDFLAGS) -o vvp@EXEEXT@ vvp.exp $(LDFLAGS) $O $(dllib) $(LIBS)
++vvp@EXEEXT@ libvpi.a: $O
++	$(CXX) $(LDFLAGS) -o vvp@EXEEXT@ -Wl,--export-all-symbols,--out-implib,libvpi.a $(LDFLAGS) $O $(dllib) $(LIBS)
+ else
+ libvpi.a: libvpi.c
+ 	$(CC) -c $(srcdir)/libvpi.c

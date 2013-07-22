@@ -1,0 +1,25 @@
+NAME="iverilog"
+VERSION=0.9.6
+RELEASE=1
+CATEGORY="System"
+SUMMARY="Icarus Verilog simulation tool"
+DESCRIPTION="Icarus Verilog is a Verilog simulation and synthesis tool. It
+operates as a compiler, compiling source code written in Verilog (IEEE-1364)
+into some target format. For batch simulation, the compiler can generate an
+intermediate form called vvp assembly. This intermediate form is executed by
+the 'vvp' command. For synthesis, the compiler generates netlists in the
+desired format."
+HOMEPAGE="http://iverilog.icarus.com/"
+SRC_URI="ftp://icarus.com/pub/eda/verilog/v${VERSION%.*}/verilog-${VERSION}.tar.gz"
+SRC_DIR="verilog-${VERSION}"
+PATCH_URI="0.9.6-export-symbols.patch"
+
+NO_AUTOHEADER=1
+
+src_install() {
+	cd ${B}
+	USE_DESTDIR=0
+	cyginstall -j1
+}
+
+DOCS="*.txt"
